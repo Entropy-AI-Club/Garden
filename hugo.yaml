@@ -18,7 +18,7 @@ params:
   description: "Resources, knowledge posts, tools, prompts, projects and meeting notes from Entropy AI Club, and every member's contribution to it."
   activitySections: ["posts", "resources", "tools", "prompts", "projects", "meeting-notes"]
   dateFormat: "02 Jan 2006"
-  github: "https://github.com/entropy-ai-club/entropy-ai-club.github.io"
+  github: "https://github.com/Entropy-AI-Club/Garden"
 
 taxonomies:
   author: authors

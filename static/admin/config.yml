@@ -13,11 +13,9 @@
 # `members` collection remains below so Authors/Attendees relation widgets
 # can still pick real slugs from data/members.yaml.
 
-local_backend: true
-
 backend:
   name: github
-  repo: entropy-ai-club/entropy-ai-club.github.io # TODO: replace with the real owner/repo
+  repo: Entropy-AI-Club/Garden
   branch: main
   base_url: https://REPLACE-WITH-YOUR-OAUTH-WORKER.workers.dev
   auth_endpoint: auth
