@@ -103,19 +103,32 @@ function htmlResponse(body, status) {
 
 // Decap's popup listens for a `message` event carrying this exact string
 // format, then closes itself. See decapcms.org's OAuth proxy docs.
+//
+// Important: never interpolate JSON.stringify(content) inside a JS string
+// literal — the quotes in {"token":"..."} break the script (SyntaxError:
+// missing ) after argument list) and leave a blank popup.
 function renderResult(status, content) {
+  // Embed as a JS value (JSON is valid JS for objects), then build the
+  // postMessage string at runtime with concatenation.
+  const dataJson = JSON.stringify({ status, content });
   return `<!doctype html>
+<html><head><meta charset="utf-8"><title>Logging in…</title></head>
+<body>
+<p>Completing login… you can close this window if it does not close itself.</p>
 <script>
-  (function () {
-    function receiveMessage(message) {
-      window.opener.postMessage(
-        "authorization:github:${status}:${JSON.stringify(content)}",
-        message.origin
-      );
-      window.removeEventListener("message", receiveMessage, false);
-    }
-    window.addEventListener("message", receiveMessage, false);
-    window.opener.postMessage("authorizing:github", "*");
-  })();
-</script>`;
+(function () {
+  var data = ${dataJson};
+  function receiveMessage(message) {
+    window.opener.postMessage(
+      "authorization:github:" + data.status + ":" + JSON.stringify(data.content),
+      message.origin
+    );
+    window.removeEventListener("message", receiveMessage, false);
+  }
+  window.addEventListener("message", receiveMessage, false);
+  window.opener.postMessage("authorizing:github", "*");
+})();
+</script>
+</body></html>`;
 }
+
