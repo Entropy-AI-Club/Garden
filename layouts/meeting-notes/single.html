@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article class="prose" data-pagefind-filter="type:Meeting Note">
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ partial "meta.html" . }}
+    {{ with .Params.attendees }}
+      <p class="meta">Attendees: {{ partial "authors.html" (dict "authors" .) }}</p>
+    {{ end }}
+  </div>
+  {{ .Content }}
+</article>
+{{ end }}

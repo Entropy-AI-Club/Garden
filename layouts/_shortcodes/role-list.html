@@ -1,0 +1,7 @@
+{{- /* Renders data/roles.yaml as a definition list. Usage: {{< role-list >}} */ -}}
+<dl class="role-list">
+  {{ range $role, $meta := hugo.Data.roles }}
+    <dt><span class="badge badge-accent">{{ $role }}</span></dt>
+    <dd>{{ $meta.description }}</dd>
+  {{ end }}
+</dl>

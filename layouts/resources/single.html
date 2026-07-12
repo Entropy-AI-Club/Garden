@@ -1,0 +1,20 @@
+{{ define "main" }}
+<article class="prose" data-pagefind-filter="type:Resource">
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p class="meta">
+      {{ with .Params.source_type }}<span class="badge">{{ . }}</span>{{ end }}
+      <span class="meta-sep">&middot;</span>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.dateFormat | default "02 Jan 2006") }}</time>
+      {{- with .Params.authors }}
+        <span class="meta-sep">&middot;</span> shared by {{ partial "authors.html" (dict "authors" .) }}
+      {{- end }}
+    </p>
+    {{ with .Params.link }}<p><a href="{{ . }}">{{ . }}</a> &rarr;</p>{{ end }}
+  </div>
+  {{ .Content }}
+  {{ with .Params.tags }}
+    <ul class="tag-list">{{ range . }}<li class="badge"><a href="{{ printf "/tags/%s/" (. | urlize) | relLangURL }}">{{ . }}</a></li>{{ end }}</ul>
+  {{ end }}
+</article>
+{{ end }}

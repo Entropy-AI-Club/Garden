@@ -1,0 +1,13 @@
+{
+  "name": "entropy-ai-club",
+  "private": true,
+  "description": "Build tooling for the Entropy AI Club Hugo site (Pagefind indexing).",
+  "scripts": {
+    "build": "hugo --gc --minify && npm run search-index",
+    "search-index": "pagefind --site public",
+    "serve": "hugo server --buildDrafts"
+  },
+  "devDependencies": {
+    "pagefind": "1.5.2"
+  }
+}

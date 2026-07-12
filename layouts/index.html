@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="wide">
+  <div class="page-header">
+    <h1>{{ .Site.Title }}</h1>
+    <p class="page-lede">{{ .Site.Params.description }}</p>
+  </div>
+
+  <div class="section-heading">
+    <h2>Explore</h2>
+  </div>
+  <div class="card-grid">
+    {{ range $section, $meta := hugo.Data.sections }}
+      {{ with site.GetPage (printf "/%s" $section) }}
+        <a class="card" href="{{ .RelPermalink }}">
+          <h3>{{ $meta.label }}</h3>
+          <p>{{ $meta.description }}</p>
+          <span class="meta">{{ len .Pages }} {{ if eq (len .Pages) 1 }}{{ $meta.singular }}{{ else }}{{ $meta.label | lower }}{{ end }}</span>
+        </a>
+      {{ end }}
+    {{ end }}
+    <a class="card" href="{{ "/members/" | relLangURL }}">
+      <h3>Members</h3>
+      <p>Everyone who makes up the club, and what they've contributed.</p>
+      <span class="meta">{{ len hugo.Data.members.roster }} members</span>
+    </a>
+  </div>
+
+  <div class="section-heading">
+    <h2>Recent activity</h2>
+    <a href="{{ "/search/" | relLangURL }}">Search everything &rarr;</a>
+  </div>
+  {{ $activity := slice }}
+  {{ range site.Params.activitySections }}
+    {{ with site.GetPage (printf "/%s" .) }}
+      {{ $activity = $activity | append .Pages }}
+    {{ end }}
+  {{ end }}
+  {{ if $activity }}
+    <ul class="timeline">
+      {{ range first 15 (sort $activity "Date" "desc") }}
+        {{ partial "activity-item.html" . }}
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p class="empty-state">Nothing published yet — be the first to add something.</p>
+  {{ end }}
+</div>
+{{ end }}

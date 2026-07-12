@@ -1,0 +1,39 @@
+{{ define "main" }}
+{{ $slug := .Params.slug }}
+<div class="prose" data-pagefind-filter="type:Member">
+  <div class="member-hero">
+    {{ with .Params.photo }}
+      <img class="member-photo" src="{{ . | relURL }}" alt="{{ $.Title }}">
+    {{ else }}
+      <span class="member-photo" aria-hidden="true"></span>
+    {{ end }}
+    <div>
+      <h1>{{ .Title }}{{ with .Params.nickname }} <small class="member-nickname">&ldquo;{{ . }}&rdquo;</small>{{ end }}</h1>
+      <span class="badge badge-accent">{{ .Params.role }}</span>
+      <ul class="member-facts" data-pagefind-meta="role:{{ .Params.role }}">
+        {{ with .Params.membership_id }}<li>Membership ID: {{ . }}</li>{{ end }}
+        {{ with .Params.joined }}<li>Joined: {{ dateFormat "02 Jan 2006" . }}</li>{{ end }}
+      </ul>
+      {{ with .Params.interests }}
+        <ul class="tag-list">
+          {{ range . }}<li class="badge">{{ . }}</li>{{ end }}
+        </ul>
+      {{ end }}
+    </div>
+  </div>
+
+  {{ with .Content }}<div class="member-bio">{{ . }}</div>{{ end }}
+
+  <h2>Contributions</h2>
+  {{ $weighted := index site.Taxonomies.authors $slug }}
+  {{ if $weighted }}
+    <ul class="timeline">
+      {{ range $weighted.Pages.ByDate.Reverse }}
+        {{ partial "activity-item.html" . }}
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p class="empty-state">No contributions logged yet — add <code>authors: ["{{ $slug }}"]</code> to a post, resource, tool, prompt, project or meeting note.</p>
+  {{ end }}
+</div>
+{{ end }}

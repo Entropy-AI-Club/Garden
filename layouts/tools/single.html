@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article class="prose" data-pagefind-filter="type:Tool">
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ partial "meta.html" . }}
+    {{ with .Params.homepage_url }}<p><a href="{{ . }}">{{ . }}</a> &rarr;</p>{{ end }}
+  </div>
+  {{ .Content }}
+  {{ with .Params.tags }}
+    <ul class="tag-list">{{ range . }}<li class="badge"><a href="{{ printf "/tags/%s/" (. | urlize) | relLangURL }}">{{ . }}</a></li>{{ end }}</ul>
+  {{ end }}
+</article>
+{{ end }}

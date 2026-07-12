@@ -1,0 +1,28 @@
+{{- /* Generates one real page per entry in data/members.yaml — the roster
+     is the single source of truth; there is no per-member content file to
+     keep in sync. See docs/PLAN.md for the full rationale. */ -}}
+{{- range hugo.Data.members.roster }}
+  {{- $m := . }}
+  {{- $slug := $m.slug }}
+  {{- $content := dict "mediaType" "text/markdown" "value" ($m.bio | default "") }}
+  {{- $params := dict
+        "slug" $slug
+        "nickname" ($m.nickname | default "")
+        "role" ($m.role | default "Member")
+        "membership_id" ($m.membership_id | default "")
+        "joined" ($m.joined | default "")
+        "photo" ($m.photo | default "")
+        "interests" ($m.interests | default (slice))
+  }}
+  {{- $dates := dict }}
+  {{- with $m.joined }}{{ $dates = dict "date" (time.AsTime .) }}{{ end }}
+  {{- $page := dict
+        "content" $content
+        "dates" $dates
+        "kind" "page"
+        "params" $params
+        "path" $slug
+        "title" $m.name
+  }}
+  {{- $.AddPage $page }}
+{{- end }}

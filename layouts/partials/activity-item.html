@@ -1,0 +1,14 @@
+{{- /* Renders one row of the global/member activity timeline.
+     Usage: {{ partial "activity-item.html" . }} where `.` is a content Page. */ -}}
+{{- $page := . -}}
+{{- $meta := index hugo.Data.sections $page.Section -}}
+<li>
+  <span class="timeline-date">{{ $page.Date.Format (site.Params.dateFormat | default "02 Jan 2006") }}</span>
+  {{- with $page.Params.authors }}
+    {{ partial "authors.html" (dict "authors" .) }}
+  {{- else }}
+    A member
+  {{- end }}
+  {{ with $meta }}{{ .verb }}{{ else }}added new content{{ end }}:
+  <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+</li>

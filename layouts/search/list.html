@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="prose page-header">
+  <h1>{{ .Title }}</h1>
+  <p class="page-lede">Search members, posts, resources, tools, prompts, projects and meeting notes — all in one place.</p>
+</div>
+<div class="prose">
+  <div id="search"></div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-ui.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      new PagefindUI({
+        element: "#search",
+        showSubResults: true,
+        excerptLength: 20
+      });
+    });
+  </script>
+{{ end }}

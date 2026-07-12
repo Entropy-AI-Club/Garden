@@ -1,0 +1,165 @@
+# Decap CMS configuration — https://decapcms.org/docs/configuration-options/
+#
+# The site is hosted on GitHub Pages (no Netlify Identity/Git Gateway), so the
+# GitHub backend needs a small external OAuth proxy. See docs/PLAN.md and
+# infra/oauth-worker/ for the Cloudflare Worker that fills that role, and
+# replace REPO and base_url below once it's deployed.
+#
+# Every CMS save goes through a pull request (editorial_workflow). Pair this
+# with GitHub branch protection on `main` (require PRs + reviews) so nothing
+# can land without approval — including direct git pushes.
+#
+# The member roster is NOT editable in the CMS (Git/PR only). A hidden
+# `members` collection remains below so Authors/Attendees relation widgets
+# can still pick real slugs from data/members.yaml.
+
+local_backend: true
+
+backend:
+  name: github
+  repo: entropy-ai-club/entropy-ai-club.github.io # TODO: replace with the real owner/repo
+  branch: main
+  base_url: https://REPLACE-WITH-YOUR-OAUTH-WORKER.workers.dev
+  auth_endpoint: auth
+
+# All CMS edits open a PR instead of committing straight to main.
+publish_mode: editorial_workflow
+
+site_url: https://entropy-ai-club.github.io/
+display_url: https://entropy-ai-club.github.io/
+logo_url: /images/logo.svg
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    description: "Knowledge posts — code, math and diagrams all supported in the body."
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Authors", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false, hint: "Shown in list pages and link previews." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+
+  - name: "resources"
+    label: "Resources"
+    label_singular: "Resource"
+    description: "AI news and links — blog posts, videos, threads."
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Authors", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Link", name: "link", widget: "string", hint: "URL to the article, video or thread." }
+      - { label: "Source type", name: "source_type", widget: "select", options: ["article", "video", "reddit", "paper", "other"], default: "article" }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
+      - { label: "Summary", name: "summary", widget: "text", required: false, hint: "Why this is worth sharing." }
+      - { label: "Commentary", name: "body", widget: "markdown", required: false }
+
+  - name: "tools"
+    label: "Tools"
+    label_singular: "Tool"
+    description: "Tools members use, and what they're used for."
+    folder: "content/tools"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Name", name: "title", widget: "string" }
+      - { label: "Date added", name: "date", widget: "datetime" }
+      - { label: "Authors", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Homepage URL", name: "homepage_url", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
+      - { label: "What it's used for", name: "body", widget: "markdown" }
+
+  - name: "prompts"
+    label: "Prompt Library"
+    label_singular: "Prompt"
+    description: "Reusable prompts the club has found useful."
+    folder: "content/prompts"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{fields.model}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Authors", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Model", name: "model", widget: "string", required: false, hint: "e.g. GPT-5, Claude, Gemini" }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
+      - { label: "Prompt + notes", name: "body", widget: "markdown", hint: "Put the prompt itself in a code block, then add usage notes below it." }
+
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    description: "Ideas and projects members have built."
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{fields.status}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Authors", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Status", name: "status", widget: "select", options: ["idea", "in-progress", "done", "paused"], default: "idea" }
+      - label: "Links"
+        name: "links"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
+      - { label: "Description", name: "body", widget: "markdown" }
+
+  - name: "meeting-notes"
+    label: "Meeting Notes"
+    label_singular: "Meeting Note"
+    description: "Notes from club meetings and syncs."
+    folder: "content/meeting-notes"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "e.g. Weekly Sync — 1 July 2026" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Logged by", name: "authors", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Attendees", name: "attendees", widget: "relation", collection: "members", file: "roster", search_fields: ["roster.*.name", "roster.*.nickname"], display_fields: ["roster.*.name"], value_field: "roster.*.slug", multiple: true }
+      - { label: "Notes", name: "body", widget: "markdown" }
+
+  # Hidden: not shown in the CMS sidebar. Exists only so relation widgets on
+  # authors/attendees can resolve member slugs. Edit the roster via Git/PR:
+  # data/members.yaml (full field schema kept so Decap never strips fields).
+  - name: "members"
+    label: "Members"
+    hide: true
+    files:
+      - name: "roster"
+        label: "Member Roster"
+        file: "data/members.yaml"
+        fields:
+          - label: "Roster"
+            name: "roster"
+            widget: "list"
+            summary: "{{fields.name}} ({{fields.slug}})"
+            fields:
+              - { label: "Slug", name: "slug", widget: "string" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Nickname", name: "nickname", widget: "string", required: false }
+              - { label: "Role", name: "role", widget: "select", options: ["Founder", "Editor", "Member", "Contributor"], default: "Member" }
+              - { label: "Membership ID", name: "membership_id", widget: "string", required: false }
+              - { label: "Joined", name: "joined", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Photo", name: "photo", widget: "image", required: false, media_folder: "/static/images/members", public_folder: "/images/members" }
+              - { label: "Interests", name: "interests", widget: "list", field: { label: "Interest", name: "interest", widget: "string" }, required: false }
+              - { label: "Bio", name: "bio", widget: "text" }

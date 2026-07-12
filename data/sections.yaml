@@ -1,0 +1,30 @@
+posts:
+  label: "Posts"
+  singular: "post"
+  verb: "published a new post"
+  description: "Knowledge posts written by members — deep dives, tutorials and write-ups."
+resources:
+  label: "Resources"
+  singular: "resource"
+  verb: "shared a resource"
+  description: "AI news and links — blog posts, videos and threads worth reading."
+tools:
+  label: "Tools"
+  singular: "tool"
+  verb: "added a tool"
+  description: "Tools members use day to day, and what they use them for."
+prompts:
+  label: "Prompt Library"
+  singular: "prompt"
+  verb: "added a prompt"
+  description: "Reusable prompts the club has found useful."
+projects:
+  label: "Projects"
+  singular: "project"
+  verb: "shared a project"
+  description: "Ideas and projects members have built."
+meeting-notes:
+  label: "Meeting Notes"
+  singular: "meeting note"
+  verb: "logged meeting notes"
+  description: "Notes from club meetings and syncs."

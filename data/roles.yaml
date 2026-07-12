@@ -1,0 +1,14 @@
+# Role badges shown on member cards/pages. Add new roles here as the club's
+# structure evolves — `role:` in data/members.yaml just needs to match a key.
+
+Founder:
+  description: "Started the club and steers its direction."
+
+Editor:
+  description: "Reviews and polishes posts and resources before they're published."
+
+Member:
+  description: "An active contributor to the club."
+
+Contributor:
+  description: "Has contributed to the club at least once."

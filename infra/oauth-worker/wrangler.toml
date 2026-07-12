@@ -1,0 +1,13 @@
+# Cloudflare Worker config for the Decap CMS GitHub OAuth proxy.
+# Deploy with: npx wrangler deploy   (run from this directory)
+#
+# After deploying, set the two secrets it needs:
+#   npx wrangler secret put GITHUB_CLIENT_ID
+#   npx wrangler secret put GITHUB_CLIENT_SECRET
+#
+# Then copy the worker's URL (https://<name>.<your-subdomain>.workers.dev)
+# into `base_url` in static/admin/config.yml.
+
+name = "entropy-ai-club-decap-oauth"
+main = "worker.js"
+compatibility_date = "2026-07-01"

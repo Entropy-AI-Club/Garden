@@ -1,0 +1,13 @@
+{{- /* Usage: {{ partial "member-card.html" (dict "slug" $slug "member" $m) }} */ -}}
+{{- $slug := .slug -}}
+{{- $m := .member -}}
+<a class="card member-card" href="{{ printf "/members/%s/" $slug | relLangURL }}">
+  {{- with $m.photo }}
+    <img class="member-photo" src="{{ . | relURL }}" alt="{{ $m.name }}" loading="lazy">
+  {{- else }}
+    <span class="member-photo" aria-hidden="true"></span>
+  {{- end }}
+  <h3>{{ $m.name }}</h3>
+  {{- with $m.nickname }}<p class="member-nickname">&ldquo;{{ . }}&rdquo;</p>{{ end }}
+  {{- with $m.role }}<span class="badge badge-accent">{{ . }}</span>{{ end }}
+</a>

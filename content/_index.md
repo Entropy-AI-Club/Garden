@@ -1,0 +1,3 @@
+---
+title: "Entropy AI Club"
+---

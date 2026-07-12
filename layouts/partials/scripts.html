@@ -1,0 +1,10 @@
+{{- /* Only pull in KaTeX / Mermaid client-side assets on pages that actually need them,
+     detected from the rendered content rather than a manual front-matter flag. */ -}}
+{{- $content := "" -}}
+{{- with .Content -}}{{ $content = . }}{{- end -}}
+{{- if or (in $content "$$") (in $content "\\(") (in $content "\\[") -}}
+  {{ partial "katex.html" . }}
+{{- end -}}
+{{- if in $content "class=\"mermaid\"" -}}
+  {{ partial "mermaid.html" . }}
+{{- end -}}

@@ -1,0 +1,94 @@
+baseURL: "https://entropy-ai-club.github.io/"
+title: "Entropy AI Club"
+
+languages:
+  en:
+    locale: "en-US"
+    label: "English"
+    weight: 1
+theme: []
+
+enableRobotsTXT: true
+enableEmojify: true
+summaryLength: 40
+
+# Every regular content page belongs to one of these sections. Sections listed
+# here are the ones aggregated into the sitewide activity timeline.
+params:
+  description: "Resources, knowledge posts, tools, prompts, projects and meeting notes from Entropy AI Club, and every member's contribution to it."
+  activitySections: ["posts", "resources", "tools", "prompts", "projects", "meeting-notes"]
+  dateFormat: "02 Jan 2006"
+  github: "https://github.com/entropy-ai-club/entropy-ai-club.github.io"
+
+taxonomies:
+  author: authors
+  tag: tags
+
+menus:
+  main:
+    - name: "Home"
+      pageRef: "/"
+      weight: 1
+    - name: "Posts"
+      pageRef: "/posts"
+      weight: 2
+    - name: "Resources"
+      pageRef: "/resources"
+      weight: 3
+    - name: "Tools"
+      pageRef: "/tools"
+      weight: 4
+    - name: "Prompts"
+      pageRef: "/prompts"
+      weight: 5
+    - name: "Projects"
+      pageRef: "/projects"
+      weight: 6
+    - name: "Meeting Notes"
+      pageRef: "/meeting-notes"
+      weight: 7
+    - name: "Members"
+      pageRef: "/members"
+      weight: 8
+    - name: "About"
+      pageRef: "/about"
+      weight: 9
+    - name: "Search"
+      pageRef: "/search"
+      weight: 10
+
+outputs:
+  home: ["HTML", "RSS"]
+  section: ["HTML", "RSS"]
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [["\\[", "\\]"], ["$$", "$$"]]
+          inline: [["\\(", "\\)"]]
+  highlight:
+    noClasses: false
+    style: "monokai"
+    lineNos: false
+    codeFences: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+
+sitemap:
+  changeFreq: "weekly"
+
+related:
+  includeNewer: true
+  threshold: 20
+  toLower: true
+  indices:
+    - name: "authors"
+      weight: 100
+    - name: "tags"
+      weight: 80

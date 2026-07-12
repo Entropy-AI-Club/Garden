@@ -1,0 +1,78 @@
+# The club roster — the single source of truth for every member.
+# `slug` becomes their page URL (/members/<slug>/), and the value contributors
+# reference in `authors:` front matter elsewhere.
+#
+# Wrapped under `roster:` (rather than being a bare top-level list) so this
+# file's root is a map, which is what Decap CMS's file-collection editor
+# (see static/admin/config.yml) expects. Adding a member here is enough to
+# give them a page — no content file needed.
+roster:
+  - slug: hemath
+    name: "DJ Hemath"
+    nickname: "DJ"
+    role: "Founder"
+    membership_id: "0001"
+    joined: 2026-06-01
+    photo: ""
+    interests:
+      - "Maths"
+      - "Classic ML"
+      - "Bayesian methods"
+    bio: |
+      Just a math guy who likes to code. Well, in reverse.
+
+  - slug: np
+    name: "Nithya Prakash"
+    nickname: "NP"
+    role: "Co-Founder"
+    membership_id: "0002"
+    joined: 2026-07-01
+    photo: ""
+    interests:
+      - "LLM"
+      - "AI Agents"
+    bio: |
+      I'll leave it blank for now.
+
+  - slug: sabari
+    name: "Sabari"
+    nickname: "Saba"
+    role: "Co-Founder"
+    membership_id: "0003"
+    joined: 2026-07-01
+    photo: ""
+    interests:
+      - "Software Engineering"
+      - "AI/ML"
+    bio: |
+      I'll leave it blank for now.
+
+  - slug: chiristo
+    name: "Chiristo"
+    nickname: "Chris"
+    role: "Co-Founder"
+    membership_id: "0004"
+    joined: 2026-07-01
+    photo: ""
+    interests:
+      - "Software Engineering"
+      - "LLM"
+      - "AI/ML"
+      - "AI Agents"
+    bio: |
+      I'll leave it blank for now.
+
+  - slug: amilzith
+    name: "Amilzith"
+    nickname: "Zith"
+    role: "Co-Founder"
+    membership_id: "0005"
+    joined: 2026-07-01
+    photo: ""
+    interests:
+      - "Software Engineering"
+      - "AI/ML"
+      - "AI Agents"
+      - "iOS Development"
+    bio: |
+      I'll leave it blank for now.
