@@ -17,7 +17,7 @@ backend:
   name: github
   repo: Entropy-AI-Club/Garden
   branch: main
-  base_url: https://entropy-ai-club.workers.dev
+  base_url: https://entropy-ai-club-decap-oauth.entropy-ai-club.workers.dev/
   auth_endpoint: auth
 
 # All CMS edits open a PR instead of committing straight to main.
