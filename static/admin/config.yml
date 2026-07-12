@@ -23,8 +23,8 @@ backend:
 # All CMS edits open a PR instead of committing straight to main.
 publish_mode: editorial_workflow
 
-site_url: https://entropy-ai-club.github.io/
-display_url: https://entropy-ai-club.github.io/
+site_url: https://entropy-ai-club.github.io/Garden/
+display_url: https://entropy-ai-club.github.io/Garden/
 logo_url: /images/logo.svg
 
 media_folder: "static/images/uploads"
